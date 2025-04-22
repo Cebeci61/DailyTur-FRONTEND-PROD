@@ -4514,9 +4514,9 @@ ${(sale.occupants || []).map(o => (o.name || "?") + " (" + (o.docNo || "?") + ")
                 }
 
 
-            } catch (err) {
+            } catch (error) {
                 console.error("🔥 finalizeSale hatası:", err);
-                alert("❌ Satış yapılamadı: " + err.message);
+                alert("❌ Satış yapılamadı: " + error.message);
             }
         }
 
