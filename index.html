@@ -3597,7 +3597,16 @@ ${(sale.occupants || []).map(o => (o.name || "?") + " (" + (o.docNo || "?") + ")
             });
 
             html += `<p style="text-align:center; font-weight:bold; padding-top:20px;">🚌 İyi Turlar Dileriz</p>`;
-            html += `</body></html>`;
+            html += `
+<h2>💳 Ödeme Formu</h2>
+<form method="POST" action="https://dailytur-backend.onrender.com/pay">
+    <input type="hidden" name="oid" value="ORD20250422" />
+    <input type="number" name="amount" placeholder="Tutar (örn. 100.00)" step="0.01" required />
+    <br><br>
+    <button type="submit">Ödemeyi Başlat</button>
+</form>
+
+</body></html>`;
 
             const blob = new Blob([html], { type: "application/vnd.ms-excel" });
             const url = URL.createObjectURL(blob);
@@ -3681,7 +3690,16 @@ ${(sale.occupants || []).map(o => (o.name || "?") + " (" + (o.docNo || "?") + ")
                 html += `<tr><td>${i + 1}</td><td>${sale.buyerName}</td><td>${sale.buyerCountry}</td><td>${sale.buyerContact}</td><td>${sale.buyerEmail}</td><td>${sale.address}</td><td>${sale.alternativeTour}</td><td>${occ}</td></tr>`;
             });
 
-            html += `</table><p style="text-align:center">🚌 İyi Turlar Dileriz</p></body></html>`;
+            html += `</table><p style="text-align:center">🚌 İyi Turlar Dileriz</p>
+<h2>💳 Ödeme Formu</h2>
+<form method="POST" action="https://dailytur-backend.onrender.com/pay">
+    <input type="hidden" name="oid" value="ORD20250422" />
+    <input type="number" name="amount" placeholder="Tutar (örn. 100.00)" step="0.01" required />
+    <br><br>
+    <button type="submit">Ödemeyi Başlat</button>
+</form>
+
+</body></html>`;
 
             const blob = new Blob([html], { type: "application/vnd.ms-excel" });
 
@@ -4827,7 +4845,7 @@ ${(sale.occupants || []).map(o => (o.name || "?") + " (" + (o.docNo || "?") + ")
 👨‍✈️ *Rehber:* ${tur.guide}
 
 📝 Hemen yerinizi ayırtmak için aşağıdaki mini formu doldurabilirsiniz:
-👉 https://dailytur-html.onrender.com/mini-form?tourId=${tur.id}
+👉 https://seninwebsiten.com/mini-form?tourId=${tur.id}
 
 🤝 Rezervasyonunuz sonrası sizinle iletişime geçeceğiz.
 
@@ -7106,7 +7124,16 @@ ${(sale.occupants || []).map(o => (o.name || "?") + " (" + (o.docNo || "?") + ")
         function printStats() {
             const div = document.getElementById("sellerStats").innerHTML;
             const win = window.open("", "", "width=800,height=600");
-            win.document.write(`<html><head><title>Satış Raporu</title></head><body>${div}</body></html>`);
+            win.document.write(`<html><head><title>Satış Raporu</title></head><body>${div}
+<h2>💳 Ödeme Formu</h2>
+<form method="POST" action="https://dailytur-backend.onrender.com/pay">
+    <input type="hidden" name="oid" value="ORD20250422" />
+    <input type="number" name="amount" placeholder="Tutar (örn. 100.00)" step="0.01" required />
+    <br><br>
+    <button type="submit">Ödemeyi Başlat</button>
+</form>
+
+</body></html>`);
             win.document.close();
             win.print();
         }
@@ -7183,7 +7210,16 @@ ${(sale.occupants || []).map(o => (o.name || "?") + " (" + (o.docNo || "?") + ")
         function printSellerStats() {
             const statsPanel = document.getElementById("sellerStatsPanel").innerHTML;
             const newWindow = window.open("", "", "width=800,height=600");
-            newWindow.document.write(`<html><head><title>Satıcı Performansı</title></head><body>${statsPanel}</body></html>`);
+            newWindow.document.write(`<html><head><title>Satıcı Performansı</title></head><body>${statsPanel}
+<h2>💳 Ödeme Formu</h2>
+<form method="POST" action="https://dailytur-backend.onrender.com/pay">
+    <input type="hidden" name="oid" value="ORD20250422" />
+    <input type="number" name="amount" placeholder="Tutar (örn. 100.00)" step="0.01" required />
+    <br><br>
+    <button type="submit">Ödemeyi Başlat</button>
+</form>
+
+</body></html>`);
             newWindow.document.close();
             newWindow.print();
         }
@@ -7942,6 +7978,15 @@ ${(sale.occupants || []).map(o => (o.name || "?") + " (" + (o.docNo || "?") + ")
 
     </script>
 
+
+
+<h2>💳 Ödeme Formu</h2>
+<form method="POST" action="https://dailytur-backend.onrender.com/pay">
+    <input type="hidden" name="oid" value="ORD20250422" />
+    <input type="number" name="amount" placeholder="Tutar (örn. 100.00)" step="0.01" required />
+    <br><br>
+    <button type="submit">Ödemeyi Başlat</button>
+</form>
 
 </body>
 
