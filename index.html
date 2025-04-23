@@ -4495,7 +4495,7 @@ ${(sale.occupants || []).map(o => (o.name || "?") + " (" + (o.docNo || "?") + ")
                     formData.append('oid', createdSalesHistory.id);
                     formData.append('amount', totalPrice);
 
-                    const response = await fetch(`https://dailytur-backend.onrender.com`, {
+                    const response = await fetch(`https://dailytur-backend.onrender.com/pay?oid=${createdSalesHistory.id}&amount=${totalPrice}`, {
                         method: 'POST',
                         body: formData
                     });
