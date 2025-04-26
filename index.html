@@ -2199,6 +2199,38 @@
   color: #555;
   margin-bottom: 20px;
 }
+.reservation-form {
+  width: 100%;
+  max-width: 100%;
+  margin: 20px auto;
+  padding: 20px;
+  box-sizing: border-box;
+  background: #f8f8f8;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+.reservation-form input,
+.reservation-form textarea {
+  width: 100%;
+  margin-bottom: 10px;
+  padding: 12px;
+  font-size: 16px;
+  border-radius: 8px;
+  border: 1px solid #ddd;
+}
+.reservation-form button {
+  width: 100%;
+  padding: 12px;
+  background-color: #2196F3;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  font-size: 16px;
+  cursor: pointer;
+}
+.reservation-form button:hover {
+  background-color: #1976D2;
+}
     </style>
 </head>
 
@@ -2882,6 +2914,11 @@
             { username: "satici1", password: "12345", role: "seller", name: "Satıcı 1" }
         ];
         let currentUser = null;
+        const savedUser = sessionStorage.getItem("currentUser");
+       if (savedUser) {
+        currentUser = JSON.parse(savedUser);
+      }
+
         let tours = [];
         let salesHistory = [];
         let sellers = [];
@@ -2944,6 +2981,7 @@
             let found = users.find(u => u.username === un && u.password === pw);
             if (found) {
                 currentUser = found;
+                 sessionStorage.setItem("currentUser", JSON.stringify(currentUser));
                 showRoleScreen(found.role);
                 return;
             }
@@ -2962,6 +3000,7 @@
                         role: "seller",
                         name: data.name || un
                     };
+                  sessionStorage.setItem("currentUser", JSON.stringify(currentUser));
                     showRoleScreen("seller");
                 } else {
                     alert("Kullanıcı/Şifre hatalı!");
@@ -2994,6 +3033,28 @@
         }
         function logout() {
             currentUser = null;
+            sessionStorage.removeItem("currentUser");
+            // ✅ Çıkış Başarılı Mesajı Göster
+const logoutMsg = document.createElement("div");
+logoutMsg.textContent = "✅ Çıkış Başarılı!";
+logoutMsg.style.position = "fixed";
+logoutMsg.style.top = "20px";
+logoutMsg.style.left = "50%";
+logoutMsg.style.transform = "translateX(-50%)";
+logoutMsg.style.backgroundColor = "#4caf50";
+logoutMsg.style.color = "#fff";
+logoutMsg.style.padding = "10px 20px";
+logoutMsg.style.borderRadius = "8px";
+logoutMsg.style.fontWeight = "bold";
+logoutMsg.style.boxShadow = "0 4px 8px rgba(0,0,0,0.2)";
+logoutMsg.style.zIndex = "9999";
+document.body.appendChild(logoutMsg);
+
+// 2.5 saniye sonra mesajı otomatik kaldır
+setTimeout(() => {
+  logoutMsg.remove();
+}, 2500);
+
             document.getElementById("loginSection").classList.add("active");
             document.getElementById("adminSection").classList.remove("active");
             document.getElementById("salesSection").classList.remove("active");
@@ -5308,9 +5369,19 @@ ${tour.description}
         }
 
         /* ================== 18. Sayfa Yüklenince ================== */
-        window.addEventListener("load", () => {
-            document.getElementById("loginSection").classList.add("active");
-        });
+window.addEventListener("DOMContentLoaded", () => {
+  const savedUser = sessionStorage.getItem("currentUser");
+  if (savedUser) {
+    currentUser = JSON.parse(savedUser);
+    showRoleScreen(currentUser.role);
+  } else {
+    document.getElementById("loginSection").classList.add("active");
+    document.getElementById("adminSection").classList.remove("active");
+    document.getElementById("salesSection").classList.remove("active");
+  }
+});
+
+       
         // Satıcıları dropdown'a yükleme
         async function loadSellers() {
             const sellerSelect = document.getElementById('selectedSeller');
