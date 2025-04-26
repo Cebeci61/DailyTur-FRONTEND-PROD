@@ -2214,7 +2214,7 @@
     <div id="google_translate_element" style="display:none;"></div>
 
     <!-- WHATSAPP -->
-    <a href="https://api.whatsapp.com/send?phone=905000000000" id="whatsappSupport" target="_blank">
+    <a href="https://api.whatsapp.com/send?phone=905491660888" id="whatsappSupport" target="_blank">
         <img src="https://upload.wikimedia.org/wikipedia/commons/6/6b/WhatsApp.svg" alt="WhatsApp Logo">
     </a>
 
@@ -2562,7 +2562,7 @@
                             <td id="sellerSalesTotal" colspan="3"></td>
                         </tr>
                         <tr>
-                            <td colspan="4" style="text-align:right;">Komisyon (%10)</td>
+                            <td colspan="4" style="text-align:right;">Komisyon (%20)</td>
                             <td id="sellerSalesCommission" colspan="3"></td>
                         </tr>
                     </tfoot>
@@ -2679,7 +2679,7 @@
                             <td id="sellerSalesTotal">0 TL</td>
                         </tr>
                         <tr>
-                            <td colspan="5">Komisyon (%10)</td>
+                            <td colspan="5">Komisyon (%20)</td>
                             <td id="sellerSalesCommission">0 TL</td>
                         </tr>
                     </tfoot>
@@ -2750,22 +2750,28 @@
             Admin Ekranına Geç
         </button>
 
+<br>
+       
 
-        <h3>Satıcı Bilgilerim</h3>
-        <label>Yeni Satıcı Adı:</label>
-        <input type="text" id="sellerNewName" />
-        <label>Yeni Şifre:</label>
-        <input type="password" id="sellerNewPass" />
-        <button onclick="sellerUpdateProfile()">Güncelle</button>
+     <div class="reservation-form">
+            <h3>🚀 Kendi Turunuzu Planlayın ve İleri Tarihli Rezervasyon</h3>
+            <input type="text" id="tourName" placeholder="🌍 Tur Adı">
+            <input type="date" id="tourDate">
+            <input type="number" id="personCount" placeholder="👥 Kişi Sayısı">
+            <input type="text" id="customerName" placeholder="😊 Müşteri Adı">
+            <input type="text" id="customerSurname" placeholder="✏️ Müşteri Soyadı">
+            <input type="text" id="country" placeholder="🏳️ Ülke">
+            <input type="tel" id="phone" placeholder="📞 Telefon">
+            <textarea id="notes" placeholder="📌 Notlar (Opsiyonel)"></textarea>
+            <button id="reservationSaveBtn" onclick="saveReservation()">💾 Rezervasyonu Kaydet</button>
+
         </div>
-
-
 
         <div class="centered-container" style="margin-bottom:20px;">
             <h4>Tur Filtre (Satıcı)</h4>
             <label>Tur Adı:</label>
             <input type="text" id="sellerTourFilterName" placeholder="Ara..." />
-            <label>Kod (1/2/3):</label>
+            <label>Kod (1 Günübirlik, 2 VIP ,3 Paket , 4 Kültür , 5 Yurtdışı 6 , Gemi Turları):</label>
             <input type="text" id="sellerTourFilterCode" placeholder="örn: 2" />
             <label>Tarih (en erken):</label>
             <input type="date" id="sellerTourFilterStart" />
@@ -2774,16 +2780,7 @@
             <!-- Eklenmesi gereken satır -->
             <label>Konum:</label>
             <input type="text" id="sellerTourFilterLocation" placeholder="Konum ara...">
-            <label>Min Fiyat:</label>
-            <input type="number" id="filterMinPrice" placeholder="En az fiyat">
 
-            <label>Max Fiyat:</label>
-            <input type="number" id="filterMaxPrice" placeholder="En yüksek fiyat">
-
-            <label>Min Koltuk:</label>
-            <input type="number" id="filterMinSeats" placeholder="En az koltuk">
-
-            <label><input type="checkbox" id="filterOnlyAvailable"> Sadece boş koltuk olanlar</label>
 
 
             <button onclick="renderSellerTours()">Filtrele</button>
@@ -2838,40 +2835,21 @@
 
 
         </div>
-        <div class="reservation-form">
-            <h3>🚀 İleri Tarihli Rezervasyon Oluştur</h3>
-            <input type="text" id="tourName" placeholder="🌍 Tur Adı">
-            <input type="date" id="tourDate">
-            <input type="number" id="personCount" placeholder="👥 Kişi Sayısı">
-            <input type="text" id="customerName" placeholder="😊 Müşteri Adı">
-            <input type="text" id="customerSurname" placeholder="✏️ Müşteri Soyadı">
-            <input type="text" id="country" placeholder="🏳️ Ülke">
-            <input type="tel" id="phone" placeholder="📞 Telefon">
-            <textarea id="notes" placeholder="📌 Notlar (Opsiyonel)"></textarea>
-            <button id="reservationSaveBtn" onclick="saveReservation()">💾 Rezervasyonu Kaydet</button>
-
+   
+ <h3>Satıcı Bilgilerim</h3>
+        <label>Yeni Satıcı Adı:</label>
+        <input type="text" id="sellerNewName" />
+        <label>Yeni Şifre:</label>
+        <input type="password" id="sellerNewPass" />
+        <button onclick="sellerUpdateProfile()">Güncelle</button>
         </div>
-
 
 
         <button class="logout" onclick="logout()" data-key="seller_logout" style="margin-left:10px;">Çıkış</button>
 
 
     </section>
-    <div id="chat-widget">
-        <div class="chat-header" onclick="toggleChat()">
-            Canlı Destek 💬
-        </div>
-        <div class="chat-body" id="chatBody">
-            <div class="chat-messages" id="chatMessages">
-                <div class="message bot">👋 Merhaba, size nasıl yardımcı olabilirim?</div>
-            </div>
-            <div class="chat-input">
-                <input type="text" id="userMessage" placeholder="Mesajınız...">
-                <button onclick="sendMessage()">Gönder</button>
-            </div>
-        </div>
-    </div>
+ 
 
 
 
@@ -4223,10 +4201,10 @@ ${(sale.occupants || []).map(o => (o.name || "?") + " (" + (o.docNo || "?") + ")
             <label>Alternatif Tur:</label>
             <input type="text" id="alternativeTour_${t.id}" placeholder="Alternatif tur adı giriniz..." />
            <!-- 📍 Adres Tipi -->
-<label>Adres Tipi:</label>
+<label>Alınacak Yer:</label>
 <select id="addressType_${t.id}" onchange="toggleAddressFields('${t.id}')">
-  <option value="Ev">Ev</option>
-  <option value="Otel">Otel</option>
+   <option value="Otel">Otel</option>
+  <option value="Ev">Ev</option> 
   <option value="Ofis">Ofis</option>
   <option value="Diğer">Diğer</option>
 </select>
@@ -4718,7 +4696,7 @@ ${(sale.occupants || []).map(o => (o.name || "?") + " (" + (o.docNo || "?") + ")
     `;
                 total += s.totalPrice;
             });
-            commission = total * 0.10;
+           commission = total * 0.20;
 
             html += `
   </tbody>
@@ -4728,7 +4706,7 @@ ${(sale.occupants || []).map(o => (o.name || "?") + " (" + (o.docNo || "?") + ")
       <td><strong>${total.toFixed(2)} TL</strong></td>
     </tr>
     <tr>
-      <td colspan="4"><strong>🧾 Komisyon (%10):</strong></td>
+      <td colspan="4"><strong>🧾 Komisyon (%20):</strong></td>
       <td><strong>${commission.toFixed(2)} TL</strong></td>
     </tr>
   </tfoot>
@@ -4845,19 +4823,45 @@ ${(sale.occupants || []).map(o => (o.name || "?") + " (" + (o.docNo || "?") + ")
         function editTour(tid) {
             alert("Tur düzenleme fonksiyonu (demo). Firestore doc.update() ile uyarlayabilirsiniz. ID:" + tid);
         }
-        function shareTour(tid) {
-            let tur = tours.find(x => x.id === tid);
-            if (!tur) { alert("Tur yok!"); return; }
-            if (navigator.share) {
-                navigator.share({
-                    title: "Tur Paylaşımı",
-                    text: `${tur.name} turu, ${tur.price} TL.`,
-                    url: location.href
-                }).catch(e => console.log("Paylaşım iptal:", e));
-            } else {
-                alert("Paylaş => " + tur.name);
-            }
-        }
+      function shareTour(tid) {
+    const tour = tours.find(t => t.id === tid);
+    if (!tour) {
+        alert("Tur bulunamadı!");
+        return;
+    }
+
+
+
+    const msg = `
+🌟 *${tour.name}* 🌟
+
+📅 *Tarih:* ${tour.date}  
+⏰ *Saat:* ${tour.startTime} - ${tour.endTime}  
+📍 *Lokasyon:* ${tour.location}  
+🚌 *Duraklar:* ${tour.stops.join(", ")}
+
+💰 *Fiyat:* ${tour.price} TL
+👨‍✈️ *Rehber:* ${tour.guide}
+
+🎯 *Öne Çıkan Özellikler:*  
+${tour.description}
+
+✨ *Hemen yerinizi ayırtın!*  
+
+
+(İyi turlar dileriz 🚀)
+    `.trim();
+
+    if (navigator.share) {
+        navigator.share({
+            title: `${tour.name} - ${tour.date}`,
+            text: msg
+        }).catch(e => console.log("Paylaşım iptal:", e));
+    } else {
+        alert(msg);
+    }
+}
+
         function whatsappTour(tourId) {
             const tur = tours.find(t => t.id === tourId);
             if (!tur) {
@@ -4879,10 +4883,9 @@ ${(sale.occupants || []).map(o => (o.name || "?") + " (" + (o.docNo || "?") + ")
 💰 *Fiyat:* ${tur.price} TL
 👨‍✈️ *Rehber:* ${tur.guide}
 
-📝 Hemen yerinizi ayırtmak için aşağıdaki mini formu doldurabilirsiniz:
-👉 https://seninwebsiten.com/mini-form?tourId=${tur.id}
+🤝Yerinizi ayırtmak için bizimle hemen iletişime geçin.
 
-🤝 Rezervasyonunuz sonrası sizinle iletişime geçeceğiz.
+🤝Mesajınız sonrası sizinle iletişime geçeceğiz.
 
 İyi eğlenceler! 🌟
 `;
@@ -6203,7 +6206,7 @@ ${(sale.occupants || []).map(o => (o.name || "?") + " (" + (o.docNo || "?") + ")
 
             html += `
     <p><strong>Toplam Tutar:</strong> ${totalAmount} TL</p>
-    <p><strong>Komisyon (%10):</strong> ${(totalAmount * 0.10).toFixed(2)} TL</p>
+    <p><strong>Komisyon (%20):</strong> ${(totalAmount * 0.10).toFixed(2)} TL</p>
     <button style="margin-top:10px; background:#03a9f4; color:#fff; border:none; padding:10px 15px; border-radius:6px;" onclick="createAdminCommissionInvoice(${totalAmount})">
       Tahsilat Fişi Oluştur
     </button>
@@ -6530,7 +6533,7 @@ ${(sale.occupants || []).map(o => (o.name || "?") + " (" + (o.docNo || "?") + ")
 
                 output += `<h4>${team} (${sales.length} satış) - Toplam: ${teamTotal.toFixed(2)} TL</h4><ol>`;
                 sortedArray.forEach(([name, total], index) => {
-                    output += `<li>🥇 ${name} - ${total.toFixed(2)} TL (Komisyon: ${(total * 0.10).toFixed(2)} TL)</li>`;
+                    output += `<li>🥇 ${name} - ${total.toFixed(2)} TL (Komisyon: ${(total * 0.20).toFixed(2)} TL)</li>`;
                 });
                 output += `</ol><hr/>`;
             });
@@ -7111,7 +7114,7 @@ ${(sale.occupants || []).map(o => (o.name || "?") + " (" + (o.docNo || "?") + ")
 
                 const total = data.length;
                 const amount = data.reduce((sum, s) => sum + (s.totalPrice || 0), 0);
-                const komisyon = amount * 0.1;
+                const komisyon = amount * 0.2;
 
                 document.getElementById("sellerStatsSummary").innerHTML += `
         <p>🧾 Satış: ${total}</p>
@@ -7197,7 +7200,7 @@ ${(sale.occupants || []).map(o => (o.name || "?") + " (" + (o.docNo || "?") + ")
                 document.getElementById("sellerStatsSummary").innerHTML += `
       <p>🧾 Toplam Satış: <strong>${totalSales}</strong></p>
       <p>💰 Tutar: <strong>${totalAmount.toFixed(2)} TL</strong></p>
-      <p>💸 Komisyon (10%): <strong>${commission.toFixed(2)} TL</strong></p>
+      <p>💸 Komisyon (20%): <strong>${commission.toFixed(2)} TL</strong></p>
     `;
 
                 const tourCounts = {};
@@ -7561,7 +7564,8 @@ ${(sale.occupants || []).map(o => (o.name || "?") + " (" + (o.docNo || "?") + ")
             });
 
             totalCell.textContent = total.toFixed(2) + " TL";
-            commissionCell.textContent = (total * 0.10).toFixed(2) + " TL";
+            commissionCell.textContent = (total * 0.20).toFixed(2) + " TL";
+
         }
 
         /* ========== 5) Modal - Detay Gösterimi ========== */
@@ -7983,7 +7987,18 @@ ${(sale.occupants || []).map(o => (o.name || "?") + " (" + (o.docNo || "?") + ")
         });
         document.getElementById("amount").value = totalAmount.toFixed(2);
 
-    </script>
+ function toggleKvkk(tourId) {
+    const kvkkBox = document.getElementById(`kvkkBox_${tourId}`);
+    if (!kvkkBox) return;
+    kvkkBox.style.display = (kvkkBox.style.display === "none" || !kvkkBox.style.display) ? "block" : "none";
+}
+
+function toggleContract(tourId) {
+    const contractBox = document.getElementById(`contractBox_${tourId}`);
+    if (!contractBox) return;
+    contractBox.style.display = (contractBox.style.display === "none" || !contractBox.style.display) ? "block" : "none";
+}
+
 
 
 
