@@ -4762,46 +4762,48 @@ ${(sale.occupants || []).map(o => (o.name || "?") + " (" + (o.docNo || "?") + ")
         }
 
         /* ================== 13. Modaller: Satılmış Koltuklar, Görsel Büyütme ================== */
-        function openSoldSeatsModal(tid) {
-            let tur = tours.find(x => x.id === tid);
-            if (!tur) {
-                alert("Tur yok!");
-                return;
-            }
+      function openSoldSeatsModal(tid) {
+    let tur = tours.find(t => t.id === tid);
+    if (!tur) {
+        alert("Tur bulunamadı!");
+        return;
+    }
 
+    let arr = salesHistory.filter(s => s.tourId === tid);
+    let html = `
+        <p><strong>Tur:</strong> ${tur.name}</p>
+        <p><strong>Koltuk:</strong> Toplam: ${tur.seats}, Satılmış: ${tur.soldSeats}</p>
+    `;
 
-            let arr = salesHistory.filter(s => s.tourId === tid);
-            let html = `
-    <p><strong>Tur:</strong> ${tur.name}</p>
-    <p><strong>Koltuk:</strong> Toplam: ${tur.seats}, Satılmış: ${tur.soldSeats}</p>
-  `;
+    if (!arr.length) {
+        html += "<p>Henüz satış yok!</p>";
+    } else {
+        arr.forEach((sale, idx) => {
+            let buyerFirstName = (sale.buyerName || "").split(" ")[0];
 
-            if (!arr.length) {
-                html += "<p>Henüz satış yok!</p>";
-            } else {
-                arr.forEach((sale, idx) => {
-                    let buyerFirstName = (sale.buyerName || "").split(" ")[0];
-                    html += `<div style="border:1px solid #ccc; padding:6px; margin:6px 0; border-radius:4px;">
-        <p><strong>Satış #${idx + 1}:</strong> ${buyerFirstName} ****** (${sale.buyerCountry}) - ${sale.seatsSold} koltuk</p>
-      `;
+            html += `
+                <div style="border:1px solid #ccc; padding:6px; margin:6px 0; border-radius:6px;">
+                    <p><strong>Satış #${idx + 1}:</strong> ${buyerFirstName} ****** (${sale.buyerCountry}) - ${sale.seatsSold} koltuk</p>
+                    ${currentUser?.role === "admin" ? `<button onclick="deleteSale('${sale.id}', '${sale.tourId}', ${sale.seatsSold})" style="background:red; color:white; padding:4px 8px; border:none; border-radius:6px;">❌ Sil</button>` : ""}
+            `;
 
-                    if (sale.occupants && sale.occupants.length) {
-                        html += "<ul>";
-                        sale.occupants.forEach((o, i) => {
-                            let ad = (o.name || "").split(" ")[0];
-                            html += `<li>#${i + 1}: ${ad} ****** / ${o.country} / ${o.docType}</li>`;
-                        });
-                        html += "</ul>";
-                    }
-
-                    html += "</div>";
+            if (sale.occupants && sale.occupants.length) {
+                html += "<ul>";
+                sale.occupants.forEach((o, i) => {
+                    let ad = (o.name || "").split(" ")[0];
+                    html += `<li>#${i + 1}: ${ad} ****** / ${o.country} / ${o.docType}</li>`;
                 });
+                html += "</ul>";
             }
 
-            document.getElementById("soldSeatsList").innerHTML = html;
-            document.getElementById("modalOverlay").style.display = "block";
-            document.getElementById("soldSeatsModal").style.display = "block";
-        }
+            html += "</div>";
+        });
+    }
+
+    document.getElementById("soldSeatsList").innerHTML = html;
+    document.getElementById("modalOverlay").style.display = "block";
+    document.getElementById("soldSeatsModal").style.display = "block";
+}
 
         function closeSoldSeatsModal() {
             document.getElementById("modalOverlay").style.display = "none";
