@@ -8011,7 +8011,27 @@ function toggleContract(tourId) {
     contractBox.style.display = (contractBox.style.display === "none" || !contractBox.style.display) ? "block" : "none";
 }
 
+async function deleteSale(saleId, tourId, seatsSold) {
+  if (!currentUser || currentUser.role !== "admin") {
+    alert("⛔ Sadece admin satış silebilir!");
+    return;
+  }
 
+  if (!confirm("Bu satışı silmek istediğinize emin misiniz?")) return;
+
+  try {
+    await db.collection("salesHistory").doc(saleId).delete();
+    await db.collection("tours").doc(tourId).update({
+      soldSeats: firebase.firestore.FieldValue.increment(-seatsSold)
+    });
+
+    alert("✅ Satış başarıyla silindi.");
+    openSoldSeatsModal(tourId);
+  } catch (error) {
+    console.error("Satış silinemedi:", error);
+    alert("❌ Satış silinemedi: " + error.message);
+  }
+}
 
 
 
