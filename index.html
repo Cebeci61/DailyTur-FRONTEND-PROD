@@ -2721,6 +2721,13 @@
                 <label>Toplam Koltuk:</label>
                 <input type="number" id="editTourSeats" />
 
+                <label>Alternatif Tur:</label>
+                <input type="text" id="editTourAlternative" placeholder="Alternatif Tur Adı" />
+
+                 <label>Satılan Koltuk:</label>
+                 <input type="number" id="editTourSoldSeats" placeholder="Satılan Koltuk Sayısı" />
+
+
                 <button onclick="saveTourEdits()">💾 Kaydet</button>
             </div>
         </div>
@@ -4214,6 +4221,9 @@ ${(sale.occupants || []).map(o => (o.name || "?") + " (" + (o.docNo || "?") + ")
 
             <label>Kaç koltuk?</label>
            <input type="number" min="1" max="${totalSeats - soldSeats}" id="seatCount_${t.id}" value="1" oninput="updateTotalPrice('${t.id}', ${t.price})" />
+<div class="occupant-list" id="occList_${t.id}">
+              <h5>Ek Kişiler</h5>
+              <button type="button" onclick="addOccupant('${t.id}')" style="background:#00acc1;">Kişi Ekle</button>
             <label>Ödeme Tipi:</label>
             <div class="payment-section">
            <h4>💳 Ödeme Bilgileri</h4>
@@ -4283,9 +4293,7 @@ ${(sale.occupants || []).map(o => (o.name || "?") + " (" + (o.docNo || "?") + ")
 <button class="finalize-btn" onclick="confirmFinalSale('${t.id}')">
   Satın Al
 </button>
-            <div class="occupant-list" id="occList_${t.id}">
-              <h5>Ek Kişiler</h5>
-              <button type="button" onclick="addOccupant('${t.id}')" style="background:#00acc1;">Kişi Ekle</button>
+            
 
         `;
                 c.appendChild(dv);
@@ -5989,7 +5997,9 @@ ${tour.description}
                 startTime: document.getElementById("editTourStart").value,
                 endTime: document.getElementById("editTourEnd").value,
                 price: parseFloat(document.getElementById("editTourPrice").value),
-                guide: document.getElementById("editTourGuide").value
+                guide: document.getElementById("editTourGuide").value,
+                alternativeTour: document.getElementById("editTourAlternative").value || "",
+                soldSeats: parseInt(document.getElementById("editTourSoldSeats").value) || 0,
             };
 
             try {
