@@ -2231,6 +2231,45 @@
 .reservation-form button:hover {
   background-color: #1976D2;
 }
+
+#editTourModal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh; /* Tüm ekranı kapla */
+  background: rgba(0, 0, 0, 0.5); /* Arka plan karart */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 9999;
+}
+
+#editTourModalContent {
+  background: white;
+  width: 95%;
+  max-width: 500px;
+  max-height: 90vh; /* İçerik ekranın %90'ını aşamasın */
+  overflow-y: auto; /* İçerik kayabilsin */
+  padding: 20px;
+  border-radius: 12px;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3);
+}
+
+/* Scrollbar tasarımı */
+#editTourModalContent::-webkit-scrollbar {
+  width: 8px;
+}
+
+#editTourModalContent::-webkit-scrollbar-thumb {
+  background-color: #888;
+  border-radius: 8px;
+}
+
+#editTourModalContent::-webkit-scrollbar-thumb:hover {
+  background: #555;
+}
+
     </style>
 </head>
 
@@ -2456,15 +2495,7 @@
             </div>
         </div>
 
-        <h2>Garanti BBVA 3D Ödeme</h2>
-        <form id="paymentForm">
-            <input type="text" id="cardNumber" placeholder="Kart Numarası" required />
-            <input type="text" id="expireMonth" placeholder="Son Kullanma Ay (MM)" required />
-            <input type="text" id="expireYear" placeholder="Son Kullanma Yıl (YY)" required />
-            <input type="password" id="cvv" placeholder="CVV" required />
-            <input type="text" id="amount" placeholder="Tutar (örn. 100.00)" required />
-            <button type="submit">Ödemeyi Başlat</button>
-        </form>
+     
 
         <!-- 📊 Gelişmiş İleri Tarihli Rezervasyonlar -->
         <div id="advancedReservationPanel"
@@ -2713,54 +2744,66 @@
 
 
 
-        <!-- TUR DÜZENLE MODALI -->
-        <div id="editTourModal" class="modal-edit">
-            <div class="modal-edit-content">
-                <span class="close" onclick="closeEditModal()">&times;</span>
-                <h3>⚡ Tur Güncelle</h3>
+     <!-- Tur Düzenleme Modalı -->
+<div id="editTourModal" style="display:none; position:fixed; top:0;left:0;right:0;bottom:0; background:rgba(0,0,0,0.5); z-index:9999; justify-content:center; align-items:center;">
+    <div style="background:#fff; padding:20px; width:90%; max-width:600px; border-radius:12px; position:relative;">
+      <span onclick="closeEditTourModal()" style="position:absolute; top:10px; right:15px; font-size:24px; cursor:pointer; color:red;">✖</span>
+      <h3>🛠️ Tur Düzenle</h3>
+  
+      <input type="hidden" id="editTourId">
+  
+      <label>Tur Adı:</label>
+      <input type="text" id="editTourName">
+  
+      <label>Açıklama:</label>
+      <textarea id="editTourDesc" rows="2"></textarea>
+  
+      <label>Tarih:</label>
+      <input type="date" id="editTourDate">
+  
+      <label>Başlangıç Saati:</label>
+      <input type="time" id="editTourStart">
+  
+      <label>Bitiş Saati:</label>
+      <input type="time" id="editTourEnd">
+  
+      <label>Fiyat (TL):</label>
+      <input type="number" id="editTourPrice">
+  
+      <label>Lokasyon:</label>
+      <input type="text" id="editTourLocation">
+  
+      <label>Duraklar (virgülle ayır):</label>
+      <input type="text" id="editTourStops">
+  
+      <label>Video (YouTube embed URL):</label>
+      <input type="text" id="editTourVideo">
+  
+      <label>Alternatif Tur:</label>
+      <input type="text" id="editTourAlternative">
+  
+      <label>Satılan Koltuk:</label>
+      <input type="number" id="editTourSoldSeats">
+  
+      <label>Toplam Koltuk:</label>
+      <input type="number" id="editTourSeats">
+  
+      <label>Tur Kodu (Kategori Kodu):</label>
+      <select id="editTourCode">
+        <option value="1">Günübirlik</option>
+        <option value="2">VIP</option>
+        <option value="3">Paket</option>
+        <option value="4">Kültür</option>
+        <option value="5">Yurtdışı</option>
+        <option value="6">Gemi</option>
+      </select>
+  
+      <button onclick="saveTourEdits()" style="margin-top:10px; background:#4caf50; color:white; padding:10px 20px; border:none; border-radius:8px;">💾 Kaydet</button>
+    </div>
+  </div>
+  
+  
 
-                <input type="hidden" id="editTourId" />
-
-                <label>Adı:</label>
-                <input type="text" id="editTourName" />
-
-                <label>Açıklama:</label>
-                <textarea id="editTourDesc" rows="2"></textarea>
-
-                <label>Tarih:</label>
-                <input type="date" id="editTourDate" />
-
-                <label>Başlangıç Saati:</label>
-                <input type="time" id="editTourStart" />
-
-                <label>Bitiş Saati:</label>
-                <input type="time" id="editTourEnd" />
-
-                <label>Fiyat (TL):</label>
-                <input type="number" id="editTourPrice" />
-
-                <label>Rehber:</label>
-                <input type="text" id="editTourGuide" />
-
-                <label>Toplam Koltuk:</label>
-                <input type="number" id="editTourSeats" />
-
-                <label>Alternatif Tur:</label>
-                <input type="text" id="editTourAlternative" placeholder="Alternatif Tur Adı" />
-
-                 <label>Satılan Koltuk:</label>
-                 <input type="number" id="editTourSoldSeats" placeholder="Satılan Koltuk Sayısı" />
-
-
-                <button onclick="saveTourEdits()">💾 Kaydet</button>
-            </div>
-        </div>
-
-
-        <button onclick="sendNotification()"
-            style="margin-top:10px;background:#03a9f4;color:#fff;padding:10px 16px;border:none;border-radius:6px;">📤
-            Gönder</button>
-        </div>
 
 
 
@@ -2782,7 +2825,7 @@
         </button>
 
 <br>
-       
+       <h6> <strong>Değerli iş arkadaşlarımız Tur listemizden bulamadığınız turları veya tarihleri aşağıdaki alandan yapabilirsiniz isterseniz bu alandan kendinize özel turlar da planlayabilirsiniz , oluşturmuş olduğunız turlar tarafımızdan uygun görülürse sizlere diğer konularla ilgili olarak  ulaşacağız.</strong></h6>
 
      <div class="reservation-form">
             <h3>🚀 Kendi Turunuzu Planlayın ve İleri Tarihli Rezervasyon</h3>
@@ -8095,7 +8138,85 @@ async function deleteSale(saleId, tourId, seatsSold) {
     alert("❌ Satış silinemedi: " + error.message);
   }
 }
+function openEditTourModal(tourId) {
+  const tour = tours.find(t => t.id === tourId);
+  if (!tour) return alert("Tur bulunamadı!");
 
+  document.getElementById("editTourId").value = tourId;
+  document.getElementById("editTourName").value = tour.name || "";
+  document.getElementById("editTourDesc").value = tour.description || "";
+  document.getElementById("editTourDate").value = tour.date || "";
+  document.getElementById("editTourStart").value = tour.startTime || "";
+  document.getElementById("editTourEnd").value = tour.endTime || "";
+  document.getElementById("editTourPrice").value = tour.price || 0;
+  document.getElementById("editTourGuide").value = tour.guide || "";
+  document.getElementById("editTourSeats").value = tour.seats || 0;
+  document.getElementById("editTourSoldSeats").value = tour.soldSeats || 0;
+  document.getElementById("editTourAlternative").value = tour.alternativeTour || "";
+  document.getElementById("editTourVideo").value = tour.video || "";
+
+  document.getElementById("editTourModal").style.display = "flex";
+}
+
+function closeEditTourModal() {
+  document.getElementById("editTourModal").style.display = "none";
+}
+
+async function saveTourEdits() {
+  const id = document.getElementById("editTourId").value;
+
+  const updatedTour = {
+    name: document.getElementById("editTourName").value,
+    description: document.getElementById("editTourDesc").value,
+    date: document.getElementById("editTourDate").value,
+    startTime: document.getElementById("editTourStart").value,
+    endTime: document.getElementById("editTourEnd").value,
+    price: parseFloat(document.getElementById("editTourPrice").value),
+    location: document.getElementById("editTourLocation").value,
+    stops: document.getElementById("editTourStops").value.split(",").map(x => x.trim()),
+    video: document.getElementById("editTourVideo").value,
+    alternativeTour: document.getElementById("editTourAlternative").value,
+    soldSeats: parseInt(document.getElementById("editTourSoldSeats").value),
+    seats: parseInt(document.getElementById("editTourSeats").value),
+    code: document.getElementById("editTourCode").value
+  };
+
+  try {
+    await toursCollection.doc(id).update(updatedTour);
+    alert("✅ Tur başarıyla güncellendi!");
+    closeEditTourModal();
+    renderAdminTours(); // Listeyi yeniden yükle
+  } catch (error) {
+    console.error("Tur güncelleme hatası:", error);
+    alert("❌ Tur güncellenemedi: " + error.message);
+  }
+}
+
+
+function editTour(tid) {
+  const tur = tours.find(t => t.id === tid);
+  if (!tur) {
+    alert("Tur bulunamadı!");
+    return;
+  }
+
+  document.getElementById("editTourId").value = tur.id || "";
+  document.getElementById("editTourName").value = tur.name || "";
+  document.getElementById("editTourDesc").value = tur.description || "";
+  document.getElementById("editTourDate").value = tur.date || "";
+  document.getElementById("editTourStart").value = tur.startTime || "";
+  document.getElementById("editTourEnd").value = tur.endTime || "";
+  document.getElementById("editTourPrice").value = tur.price || "";
+  document.getElementById("editTourLocation").value = tur.location || "";
+  document.getElementById("editTourStops").value = tur.stops?.join(", ") || "";
+  document.getElementById("editTourVideo").value = tur.video || "";
+  document.getElementById("editTourAlternative").value = tur.alternativeTour || "";
+  document.getElementById("editTourSoldSeats").value = tur.soldSeats || 0;
+  document.getElementById("editTourSeats").value = tur.seats || 0;
+  document.getElementById("editTourCode").value = tur.code || "1";
+
+  document.getElementById("editTourModal").style.display = "flex";
+}
 
 
 
