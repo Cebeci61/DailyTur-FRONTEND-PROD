@@ -2270,6 +2270,79 @@
   background: #555;
 }
 
+    .custom-form {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 95vw; /* %95 genişlik */
+  max-width: 600px;
+  margin: 0 auto;
+  padding: 30px;
+  background: #ffffff;
+  box-shadow: 0 8px 30px rgba(0,0,0,0.1);
+  border-radius: 15px;
+  box-sizing: border-box;
+}
+
+.custom-form input,
+.custom-form textarea {
+  width: 100%;
+  padding: 14px;
+  margin-bottom: 14px;
+  border-radius: 8px;
+  border: 1px solid #ccc;
+  font-size: 16px;
+  background: #fafafa;
+  box-sizing: border-box;
+}
+
+.custom-button {
+  width: 100%;
+  padding: 16px;
+  background: linear-gradient(45deg, #00bcd4, #00796b);
+  color: white;
+  font-weight: bold;
+  font-size: 18px;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+.custom-button:hover {
+  background: linear-gradient(45deg, #00796b, #004d40);
+  transform: scale(1.02);
+}
+
+
+@media (max-width: 1024px) {
+  .custom-form {
+    width: 100%;
+    max-width: 100%;
+    margin: 0 auto;
+    padding: 20px;
+    box-sizing: border-box;
+  }
+}
+
+@media (max-width: 768px) {
+  .custom-form {
+    padding: 16px;
+    border-radius: 0;
+    box-shadow: none;
+  }
+}
+
+@media (min-width: 1025px) {
+  .custom-form {
+    max-width: 600px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+}
+
+
     </style>
 </head>
 
@@ -2323,6 +2396,20 @@
             </p>
               
         </div>
+        <h2> 📝 Yeni Üye Başvuru Formu</h2>
+        <form id="registerForm2" class="custom-form">
+            <input type="text" id="fullName2" class="custom-input" placeholder="👤 Ad Soyad *" required>
+            <input type="tel" id="phone2" class="custom-input" placeholder="📞 Telefon (+90...) *" required>
+            <input type="text" id="city2" class="custom-input" placeholder="🏙️ Şehir *" required>
+            <input type="text" id="country2" class="custom-input" placeholder="🌎 Ülke *" required>
+            <input type="text" id="agency2" class="custom-input" placeholder="🏢 Acente Adı (Varsa)">
+            <textarea id="note2" class="custom-textarea" placeholder="📝 Notlar (Opsiyonel)" rows="4"></textarea>
+            <button type="button" id="submitBtn2" onclick="submitRegistrationForm()" class="custom-button">🚀 Başvuruyu Gönder</button>
+            <p class="custom-note">* işaretli alanlar zorunludur. Başvurunuz doğrudan yetkili ekibe ulaşacaktır.</p>
+            <div id="formMessage2"></div>
+          </form>
+       
+        
 <div class="faq-section" style="margin-top: 20px;">
     <h3 style="text-align: center; margin-bottom: 20px;">❓ Sıkça Sorulan Sorular</h3>
 
@@ -2742,7 +2829,25 @@
             </div>
         </div>
 
+        <h2>👩‍💻 Admin Panel - Yeni Üye Başvuruları</h2>
 
+        <table id="adminUserTable">
+          <thead>
+            <tr>
+              <th>Ad Soyad</th>
+              <th>Telefon</th>
+              <th>Şehir</th>
+              <th>Ülke</th>
+              <th>Acente</th>
+              <th>Not</th>
+              <th>Durum</th>
+              <th>İşlem</th>
+            </tr>
+          </thead>
+          <tbody id="adminUserBody">
+            <!-- Veriler buraya gelecek -->
+          </tbody>
+        </table>
 
      <!-- Tur Düzenleme Modalı -->
 <div id="editTourModal" style="display:none; position:fixed; top:0;left:0;right:0;bottom:0; background:rgba(0,0,0,0.5); z-index:9999; justify-content:center; align-items:center;">
@@ -8218,9 +8323,123 @@ function editTour(tid) {
   document.getElementById("editTourModal").style.display = "flex";
 }
 
+document.addEventListener('DOMContentLoaded', function () {
+    const form = document.getElementById('registerForm2');
+    const submitBtn = document.getElementById('submitBtn2');
+    const formMessage = document.getElementById('formMessage2');
 
+    form.addEventListener('submit', async (e) => {
+      e.preventDefault();
 
+      const fullName = document.getElementById('fullName2').value.trim();
+      const phone = document.getElementById('phone2').value.trim();
+      const city = document.getElementById('city2').value.trim();
+      const country = document.getElementById('country2').value.trim();
+      const agency = document.getElementById('agency2').value.trim();
+      const note = document.getElementById('note2').value.trim();
 
+      if (!fullName || !phone || !city || !country) {
+        formMessage.innerHTML = '<p class="custom-error">❌ Lütfen zorunlu alanları doldurun!</p>';
+        return;
+      }
+
+      submitBtn.disabled = true;
+      formMessage.innerHTML = '<p class="custom-loading">⏳ Başvurunuz işleniyor...</p>';
+
+      try {
+        await firebase.firestore().collection('newUsers').add({
+          fullName: fullName,
+          phone: phone,
+          city: city,
+          country: country,
+          agency: agency || "-",
+          note: note || "-",
+          createdAt: new Date().toISOString(),
+          status: "Yeni Başvuru"
+        });
+
+        formMessage.innerHTML = '<p class="custom-success">✅ Başvurunuz alınmıştır!</p>';
+        form.reset();
+      } catch (err) {
+        console.error(err);
+        formMessage.innerHTML = '<p class="custom-error">❌ Hata oluştu. Lütfen tekrar deneyin.</p>';
+      } finally {
+        submitBtn.disabled = false;
+      }
+    });
+  });
+  function submitRegistrationForm() {
+  const submitBtn = document.getElementById('submitBtn2');
+  const formMessage = document.getElementById('formMessage2');
+
+  const fullName = document.getElementById('fullName2').value.trim();
+  const phone = document.getElementById('phone2').value.trim();
+  const city = document.getElementById('city2').value.trim();
+  const country = document.getElementById('country2').value.trim();
+  const agency = document.getElementById('agency2').value.trim();
+  const note = document.getElementById('note2').value.trim();
+
+  if (!fullName || !phone || !city || !country) {
+    formMessage.innerHTML = '<p class="custom-error">❌ Lütfen zorunlu alanları doldurun!</p>';
+    return;
+  }
+
+  submitBtn.disabled = true;
+  formMessage.innerHTML = '<p class="custom-loading">⏳ Başvurunuz işleniyor...</p>';
+
+  firebase.firestore().collection('newUsers').add({
+    fullName,
+    phone,
+    city,
+    country,
+    agency: agency || "-",
+    note: note || "-",
+    createdAt: new Date().toISOString(),
+    status: "Yeni Başvuru"
+  }).then(() => {
+    formMessage.innerHTML = '<p class="custom-success">✅ Başvurunuz alınmıştır!</p>';
+    document.getElementById('registerForm2').reset();
+  }).catch((error) => {
+    console.error(error);
+    formMessage.innerHTML = '<p class="custom-error">❌ Hata oluştu. Lütfen tekrar deneyin.</p>';
+  }).finally(() => {
+    submitBtn.disabled = false;
+  });
+}
+const userBody = document.getElementById('adminUserBody');
+
+  function renderUser(doc) {
+    const tr = document.createElement('tr');
+    tr.innerHTML = `
+      <td>${doc.data().fullName}</td>
+      <td>${doc.data().phone}</td>
+      <td>${doc.data().city}</td>
+      <td>${doc.data().country}</td>
+      <td>${doc.data().agency}</td>
+      <td>${doc.data().note}</td>
+      <td>${doc.data().status}</td>
+      <td class="action-buttons">
+        <button class="approve" onclick="updateStatus('${doc.id}', 'Onaylandı')">Onayla</button>
+        <button class="reject" onclick="updateStatus('${doc.id}', 'Reddedildi')">Reddet</button>
+      </td>
+    `;
+    userBody.appendChild(tr);
+  }
+
+  function updateStatus(id, newStatus) {
+    db.collection('newUsers').doc(id).update({
+      status: newStatus
+    }).then(() => {
+      alert('Durum güncellendi. Sayfayı yenileyin.');
+    });
+  }
+
+  db.collection('newUsers').orderBy('createdAt', 'desc').onSnapshot(snapshot => {
+    userBody.innerHTML = '';
+    snapshot.forEach(doc => {
+      renderUser(doc);
+    });
+  });
 
 
 
