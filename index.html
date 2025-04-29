@@ -4306,11 +4306,11 @@ ${(sale.occupants || []).map(o => (o.name || "?") + " (" + (o.docNo || "?") + ")
            <!-- 📍 Adres Tipi -->
 <label>Alınacak Yer:</label>
 <select id="addressType_${t.id}" onchange="toggleAddressFields('${t.id}')">
-   <option value="Otel">Otel</option>
-  <option value="Ev">Ev</option> 
-  <option value="Ofis">Ofis</option>
   <option value="Diğer">Diğer</option>
-</select>
+  <option value="Ev">Ev</option>
+  <option value="Otel">Otel</option>
+  <option value="Ofis">Ofis</option>
+ </select>
 
 <!-- 🎯 Adres Alanları -->
 <div id="addressFields_${t.id}" class="address-fields" style="margin-top:10px;"></div>
