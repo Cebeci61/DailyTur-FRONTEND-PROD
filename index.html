@@ -2938,8 +2938,14 @@
             <h4>Tur Filtre (Satıcı)</h4>
             <label>Tur Adı:</label>
             <input type="text" id="sellerTourFilterName" placeholder="Ara..." />
-            <label>Kod (1 Günübirlik, 2 VIP ,3 Paket , 4 Kültür , 5 Yurtdışı 6 , Gemi Turları):</label>
-            <input type="text" id="sellerTourFilterCode" placeholder="örn: 2" />
+           <input type="text" id="sellerTourFilterCode" placeholder="örn: 2" />
+            <select id="addTourCode" onchange="tourCodeChange()">
+                <option value="1">1 - Günübirlik Tur (Mavi)</option>
+                <option value="2">2 - VIP Tur (Kırmızı)</option>
+                <option value="3">3 - Paket Tur (Yeşil)</option>
+                <option value="4">4 - Kültür Turu (Turuncu)</option>
+                <option value="5">5 - Yurtdışı Turu (Pembe)</option>
+            </select>           
             <label>Tarih (en erken):</label>
             <input type="date" id="sellerTourFilterStart" />
             <label>Tarih (en geç):</label>
