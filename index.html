@@ -2985,10 +2985,10 @@
                 <select id="accFilterPayType">
                     <option value="">Tümü</option>
                     <option value="Kredi Kartı">Kredi Kartı</option>
-                    <option value="Araçta Ödeme">Araçta Ödeme</option>
+                    <option value="Satıcıya Ödeme">Satıcıya Ödeme</option>
                     <option value="Banka Havalesi">Banka Havalesi</option>
                 </select>
-
+cı
                 <label>📍 Lokasyon:</label>
                 <input type="text" id="accFilterLocation" />
 
@@ -4438,7 +4438,7 @@ ${(sale.occupants || []).map(o => (o.name || "?") + " (" + (o.docNo || "?") + ")
            <label>📌 Ödeme Tipi:</label>
          <select id="payment_${t.id}" onchange="togglePaymentExtra('${t.id}')">
           <option value="">-- Seçin --</option>
-           <option value="Araçta Ödeme">🚌 Araçta Ödeme (Satıcı Öder)</option>
+           <option value="Satıcıya Ödeme">🚌 Satıcıya Ödeme(Nakit)</option>
            <option value="Banka Havalesi">🏦 Banka Havalesi</option>
            <option value="Kredi Kartı">💳 Kredi Kartı</option>
          </select>
@@ -4694,7 +4694,7 @@ ${(sale.occupants || []).map(o => (o.name || "?") + " (" + (o.docNo || "?") + ")
                 }
 
                 // 6. Satış nesnesi
-                const paymentStatus = paymentType === "Araçta Ödeme" ? "-" : "pending";
+                const paymentStatus = paymentType === "Satıcıya Ödeme" ? "-" : "pending";
                 const sale = {
                     tourId: tid,
                     tourName: tour.name,
@@ -5200,8 +5200,8 @@ ${tour.description}
       <label>👤 Gönderen Ad:</label>
       <input type="text" placeholder="Ad Soyad" />
     `;
-            } else if (method === "Araçta Ödeme") {
-                container.innerHTML = `<p style="color:green;">🚌 Araçta ödeme seçildi. Satıcıya bilgi verilecektir.</p>`;
+            } else if (method === "Satıcıya Ödeme") {
+                container.innerHTML = `<p style="color:green;">🚌 Satıcıya ödeme seçildi. Satıcıya bilgi verilecektir.</p>`;
             }
         }
 
