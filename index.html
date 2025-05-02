@@ -2460,7 +2460,7 @@
             <p data-key="admin_panel_subtitle">
                 Merhaba <span id="adminName"></span>. Burada turları ekleyip, satış raporuna bakabilirsiniz.
             </p>
-
+            <button class="logout" onclick="logout()" data-key="seller_logout" style="margin-left:10px;">Çıkış</button>
             <h3 data-key="admin_changePass">Admin Şifre Değiştir</h3>
             <label data-key="admin_newPass">Yeni Şifre:</label>
             <input type="password" id="newAdminPass" placeholder="Yeni Şifre" />
@@ -2839,22 +2839,19 @@
       
 
      <!-- Tur Düzenleme Modalı -->
-     <!-- Arkaplan (gri alan) -->
      <div id="editTourModal"
      style="display:none; position:fixed; top:0; left:0; right:0; bottom:0;
-       background:rgba(0,0,0,0.5); z-index:999;">
+            background:rgba(0,0,0,0.5); z-index:999;">
 
-     <!-- İçerik kutusu (scroll edilebilir) -->
-     <div style="background:#fff; margin:50px auto; padding:20px;
-         width:90%; max-width:600px; border-radius:12px;
-         max-height:90vh; overflow-y:auto; position:relative;">
+  <!-- İçerik kutusu (scroll edilebilir) -->
+  <div style="background:#fff; margin:50px auto; padding:20px;
+              width:90%; max-width:600px; border-radius:12px;
+              max-height:90vh; overflow-y:auto; position:relative;">
+    
+    <span onclick="closedEditTourModal()"
+          style="position:absolute; top:10px; right:15px; font-size:24px; cursor:pointer;">❌</span>
 
-     <span onclick="closedEditTourModal()"
-      style="position:absolute; top:10px; right:15px; font-size:24px; cursor:pointer;">❌</span>
-
-      <h3>✍️ Tur Düzenle</h3>
-
-
+    <h3>✍️ Tur Düzenle</h3>
   
       <input type="hidden" id="editTourId">
   
@@ -2904,6 +2901,7 @@
         <option value="6">Gemi</option>
       </select>
   
+      
       <button onclick="saveTourEdits()" style="margin-top:10px; background:#4caf50; color:white; padding:10px 20px; border:none; border-radius:8px;">💾 Kaydet</button>
       <button onclick="closeEditTourModal()" style="
       background-color: #e53935;
@@ -2940,7 +2938,7 @@
 
 <br>
        <h6> <strong>Değerli iş arkadaşlarımız Tur listemizden bulamadığınız turları veya tarihleri aşağıdaki alandan yapabilirsiniz isterseniz bu alandan kendinize özel turlar da planlayabilirsiniz , oluşturmuş olduğunız turlar tarafımızdan uygun görülürse sizlere diğer konularla ilgili olarak  ulaşacağız.</strong></h6>
-
+       <button class="logout" onclick="logout()" data-key="seller_logout" style="margin-left:10px;">Çıkış</button>
      <div class="reservation-form">
             <h3>🚀 Kendi Turunuzu Planlayın ve İleri Tarihli Rezervasyon</h3>
             <input type="text" id="tourName" placeholder="🌍 Tur Adı">
@@ -2959,13 +2957,8 @@
             <h4>Tur Filtre (Satıcı)</h4>
             <label>Tur Adı:</label>
             <input type="text" id="sellerTourFilterName" placeholder="Ara..." />
-            <select id="addTourCode" onchange="tourCodeChange()">
-                <option value="1">1 - Günübirlik Tur (Mavi)</option>
-                <option value="2">2 - VIP Tur (Kırmızı)</option>
-                <option value="3">3 - Paket Tur (Yeşil)</option>
-                <option value="4">4 - Kültür Turu (Turuncu)</option>
-                <option value="5">5 - Yurtdışı Turu (Pembe)</option>
-            </select>
+            <label>Kod (1 Günübirlik, 2 VIP ,3 Paket , 4 Kültür , 5 Yurtdışı 6 , Gemi Turları):</label>
+            <input type="text" id="sellerTourFilterCode" placeholder="örn: 2" />
             <label>Tarih (en erken):</label>
             <input type="date" id="sellerTourFilterStart" />
             <label>Tarih (en geç):</label>
@@ -3002,7 +2995,7 @@
                     <option value="Satıcıya Ödeme">Satıcıya Ödeme</option>
                     <option value="Banka Havalesi">Banka Havalesi</option>
                 </select>
-cı
+
                 <label>📍 Lokasyon:</label>
                 <input type="text" id="accFilterLocation" />
 
@@ -8455,17 +8448,7 @@ const userBody = document.getElementById('adminUserBody');
     });
   });
 
-  function closeEditTourModal() {
-    document.getElementById("editTourModal").style.display = "none";
-  }
-  function closeEditTourModal() {
-  document.getElementById("editTourModal").style.display = "none";
-  // Modalı kapatırken varsa formu da temizlemek istersen buraya ekleyebilirsin
-}
-function openEditTourModal() {
-  document.getElementById("editTourModal").style.display = "block";
-  window.scrollTo(0, 0); // Modal açıldığında ekranın en üstüne çık
-}
+
 
     </script>
 
