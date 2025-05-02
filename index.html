@@ -2341,7 +2341,13 @@
     margin-right: auto;
   }
 }
-
+#editTourModal::-webkit-scrollbar {
+  width: 8px;
+}
+#editTourModal::-webkit-scrollbar-thumb {
+  background-color: #999;
+  border-radius: 10px;
+}
 
     </style>
 </head>
@@ -2837,11 +2843,21 @@
 
       
 
-     <!-- Tur Düzenleme Modalı -->
-<div id="editTourModal" style="display:none; position:fixed; top:0;left:0;right:0;bottom:0; background:rgba(0,0,0,0.5); z-index:9999; justify-content:center; align-items:center;">
-    <div style="background:#fff; padding:20px; width:90%; max-width:600px; border-radius:12px; position:relative;">
-      <span onclick="closeEditTourModal()" style="position:absolute; top:10px; right:15px; font-size:24px; cursor:pointer; color:red;">✖</span>
-      <h3>🛠️ Tur Düzenle</h3>
+    <!-- Tur Düzenleme Modalı -->
+     <!-- Arkaplan (gri alan) -->
+     <div id="editTourModal"
+     style="display:none; position:fixed; top:0; left:0; right:0; bottom:0;
+       background:rgba(0,0,0,0.5); z-index:999;">
+
+     <!-- İçerik kutusu (scroll edilebilir) -->
+     <div style="background:#fff; margin:50px auto; padding:20px;
+         width:90%; max-width:600px; border-radius:12px;
+         max-height:90vh; overflow-y:auto; position:relative;">
+
+     <span onclick="closedEditTourModal()"
+      style="position:absolute; top:10px; right:15px; font-size:24px; cursor:pointer;">❌</span>
+
+      <h3>✍️ Tur Düzenle</h3>
   
       <input type="hidden" id="editTourId">
   
@@ -2892,6 +2908,14 @@
       </select>
   
       <button onclick="saveTourEdits()" style="margin-top:10px; background:#4caf50; color:white; padding:10px 20px; border:none; border-radius:8px;">💾 Kaydet</button>
+      <button onclick="closeEditTourModal()" style="
+      background-color: #e53935;
+      color: white;
+      padding: 10px 20px;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+    ">🚪 Çıkış</button>
     </div>
   </div>
   
@@ -8434,7 +8458,15 @@ const userBody = document.getElementById('adminUserBody');
       renderUser(doc);
     });
   });
-
+ }
+  function closeEditTourModal() {
+  document.getElementById("editTourModal").style.display = "none";
+  // Modalı kapatırken varsa formu da temizlemek istersen buraya ekleyebilirsin
+}
+function openEditTourModal() {
+  document.getElementById("editTourModal").style.display = "block";
+  window.scrollTo(0, 0); // Modal açıldığında ekranın en üstüne çık
+}
 
 
     </script>
