@@ -8543,58 +8543,7 @@ const userBody = document.getElementById('adminUserBody');
 
 
     </script>
-<script>
-    const GOOGLE_API_KEY = "AIzaSyDIxsLVVNiDfWI0btm3Mxu-erml-EHpX1s";
-    
-    function toggleLanguages(id) {
-      const block = document.getElementById("lang-tour-" + id);
-      block.style.display = block.style.display === "none" ? "block" : "none";
-    }
-    
-    function speakTranslatedInfo(id, lang) {
-      if (!lang) return;
-      const desc = document.getElementById("desc-" + id).innerText
-        .replace(/([\u{1F600}-\u{1F6FF}\u{2600}-\u{26FF}])/gu, "") // Emojileri çıkar
-        .replace(/\p{Emoji_Presentation}/gu, '') // Unicode emoji çıkar (gelişmiş destek için)
-        .replace(/:[^\s]+:/g, '') // :emoji: biçimini çıkar
-        .replace(/\s+/g, ' ').trim(); // gereksiz boşlukları temizle
-    
-      const translatedOutput = document.getElementById("translated-tour-" + id);
-      const whatsappLink = document.getElementById("whatsapp-tour-" + id);
-    
-      fetch(`https://translation.googleapis.com/language/translate/v2?key=${GOOGLE_API_KEY}`, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ q: desc, target: lang })
-      })
-      .then(res => res.json())
-      .then(data => {
-        const translated = data.data.translations[0].translatedText.replace(/([\u{1F600}-\u{1F6FF}\u{2600}-\u{26FF}])/gu, "");
-        translatedOutput.innerText = translated;
-    
-        if (["ar", "fa", "he", "ur"].includes(lang)) {
-          translatedOutput.classList.add("rtl");
-        } else {
-          translatedOutput.classList.remove("rtl");
-        }
-    
-        const utterance = new SpeechSynthesisUtterance(translated);
-        utterance.lang = lang;
-        speechSynthesis.cancel();
-        speechSynthesis.speak(utterance);
-    
-        whatsappLink.href = `https://wa.me/?text=${encodeURIComponent(translated)}`;
-      })
-      .catch(err => {
-        translatedOutput.innerText = "Çeviri başarısız oldu.";
-        console.error("Translation Error:", err);
-      });
-    }
-    
-    function stopSpeaking() {
-      speechSynthesis.cancel();
-    }
-    </script>
+
 
 </body>
 
