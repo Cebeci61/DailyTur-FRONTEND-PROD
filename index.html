@@ -3424,99 +3424,7 @@ setTimeout(() => {
       <p><strong>Duraklar:</strong> ${t.stops.join(", ")}</p>
       <p><strong>Konum:</strong> ${t.location}, <strong>Rehber:</strong> ${t.guide}</p>
       <p>${t.description}</p>
-    <p class="tour-desc" id="desc-${t.id}" style="display:none;" >
-      📍 Konum: ${t.location}<br>
-      💸 Fiyat: ${t.price} TL<br>
-      🚌 Duraklar: ${t.stops?.join(" - ")}<br>
-      📝 Açıklama: ${t.description}
-    </p>
-    <button class="speak-btn" onclick="toggleLanguages('${t.id}')">🔊 Dinle</button>
-    <div class="lang-block" id="lang-tour-${t.id}" style="display:none; margin-top:10px;">
-      <div class="lang-options">
-        <select onchange="speakTranslatedInfo('${t.id}', this.value)">
-          <option value="">🌐 Dil Seçin</option>
-          <option value="tr">🇹🇷 Türkçe</option>
-          <option value="en">🇬🇧 İngilizce</option>
-          <option value="ar">🇸🇦 Arapça</option>
-          <option value="de">🇩🇪 Almanca</option>
-          <option value="ru">🇷🇺 Rusça</option>
-          <option value="fr">🇫🇷 Fransızca</option>
-          <option value="it">🇮🇹 İtalyanca</option>
-          <option value="fa">🇮🇷 Farsça</option>
-          <option value="zh">🇨🇳 Çince</option>
-        </select>
-        <button class="stop-btn" onclick="stopSpeaking()">🛑 Konuşmayı Durdur</button>
-      </div>
-      <div class="translated-output" id="translated-tour-${t.id}"></div>
-      <a href="#" id="whatsapp-tour-${t.id}" class="share-whatsapp" target="_blank">📤 WhatsApp'tan Gönder</a>
-    </div>
-  </div>
-  
-  <style>
-  .tour-card {
-    border: 2px solid #ddd;
-    border-radius: 12px;
-    padding: 16px;
-    margin: 20px auto;
-    background: #fefefe;
-    max-width: 600px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-  }
-  .tour-card h3 {
-    margin-bottom: 10px;
-    color: #333;
-  }
-  .tour-desc {
-    font-size: 15px;
-    line-height: 1.6;
-    color: #444;
-  }
-  .speak-btn {
-    background: #03a9f4;
-    color: white;
-    padding: 8px 14px;
-    border: none;
-    border-radius: 8px;
-    margin-top: 10px;
-    cursor: pointer;
-  }
-  .lang-options select {
-    padding: 6px 12px;
-    border-radius: 6px;
-    margin-bottom: 8px;
-    margin-right: 10px;
-  }
-  .lang-options button.stop-btn {
-    background: crimson;
-    color: white;
-    padding: 6px 10px;
-    border: none;
-    border-radius: 6px;
-    font-weight: bold;
-    cursor: pointer;
-  }
-  .translated-output {
-    margin-top: 10px;
-    padding: 10px;
-    background: #f5f5f5;
-    border-radius: 6px;
-    border: 1px solid #ddd;
-  }
-  .translated-output.rtl {
-    direction: rtl;
-    text-align: right;
-  }
-  .share-whatsapp {
-    display: inline-block;
-    margin-top: 10px;
-    background: #25D366;
-    color: white;
-    padding: 8px 12px;
-    border-radius: 6px;
-    text-decoration: none;
-  }
-  </style>
-  
+    `;
 
                 if (t.code === "3") {
                     dv.innerHTML += `
@@ -4455,6 +4363,104 @@ ${(sale.occupants || []).map(o => (o.name || "?") + " (" + (o.docNo || "?") + ")
           <p><strong>Duraklar:</strong> ${t.stops.join(", ")}</p>
           <p><strong>Konum:</strong> ${t.location}, <strong>Rehber:</strong> ${t.guide}</p>
           <p>${t.description}</p>
+          
+   
+    
+    <p class="tour-desc" id="desc-${t.id}" style="display:none;" >
+      📍 Konum: ${t.location}<br>
+      💸 Fiyat: ${t.price} TL<br>
+      🚌 Duraklar: ${t.stops?.join(" - ")}<br>
+      📝 Açıklama: ${t.description}
+    </p>
+    <button class="speak-btn" onclick="toggleLanguages('${t.id}')">🔊 Dinle</button>
+    <div class="lang-block" id="lang-tour-${t.id}" style="display:none; margin-top:10px;">
+      <div class="lang-options">
+        <select onchange="speakTranslatedInfo('${t.id}', this.value)">
+          <option value="">🌐 Dil Seçin</option>
+          <option value="tr">🇹🇷 Türkçe</option>
+          <option value="en">🇬🇧 İngilizce</option>
+          <option value="ar">🇸🇦 Arapça</option>
+          <option value="de">🇩🇪 Almanca</option>
+          <option value="ru">🇷🇺 Rusça</option>
+          <option value="fr">🇫🇷 Fransızca</option>
+          <option value="it">🇮🇹 İtalyanca</option>
+          <option value="fa">🇮🇷 Farsça</option>
+          <option value="zh">🇨🇳 Çince</option>
+        </select>
+        <button class="stop-btn" onclick="stopSpeaking()">🛑 Konuşmayı Durdur</button>
+      </div>
+      <div class="translated-output" id="translated-tour-${t.id}"></div>
+      <a href="#" id="whatsapp-tour-${t.id}" class="share-whatsapp" target="_blank">📤 WhatsApp'tan Gönder</a>
+    </div>
+  </div>
+  
+  <style>
+  .tour-card {
+    border: 2px solid #ddd;
+    border-radius: 12px;
+    padding: 16px;
+    margin: 20px auto;
+    background: #fefefe;
+    max-width: 600px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  }
+  .tour-card h3 {
+    margin-bottom: 10px;
+    color: #333;
+  }
+  .tour-desc {
+    font-size: 15px;
+    line-height: 1.6;
+    color: #444;
+  }
+  .speak-btn {
+    background: #03a9f4;
+    color: white;
+    padding: 8px 14px;
+    border: none;
+    border-radius: 8px;
+    margin-top: 10px;
+    cursor: pointer;
+  }
+  .lang-options select {
+    padding: 6px 12px;
+    border-radius: 6px;
+    margin-bottom: 8px;
+    margin-right: 10px;
+  }
+  .lang-options button.stop-btn {
+    background: crimson;
+    color: white;
+    padding: 6px 10px;
+    border: none;
+    border-radius: 6px;
+    font-weight: bold;
+    cursor: pointer;
+  }
+  .translated-output {
+    margin-top: 10px;
+    padding: 10px;
+    background: #f5f5f5;
+    border-radius: 6px;
+    border: 1px solid #ddd;
+  }
+  .translated-output.rtl {
+    direction: rtl;
+    text-align: right;
+  }
+  .share-whatsapp {
+    display: inline-block;
+    margin-top: 10px;
+    background: #25D366;
+    color: white;
+    padding: 8px 12px;
+    border-radius: 6px;
+    text-decoration: none;
+  }
+  </style>
+  
+  
+  
 
           ${t.code === "3" ? `
         <div class="package-details">
@@ -8544,7 +8550,58 @@ const userBody = document.getElementById('adminUserBody');
 
     </script>
 
-
+<script>
+    const GOOGLE_API_KEY = "AIzaSyDIxsLVVNiDfWI0btm3Mxu-erml-EHpX1s";
+    
+    function toggleLanguages(id) {
+      const block = document.getElementById("lang-tour-" + id);
+      block.style.display = block.style.display === "none" ? "block" : "none";
+    }
+    
+    function speakTranslatedInfo(id, lang) {
+      if (!lang) return;
+      const desc = document.getElementById("desc-" + id).innerText
+        .replace(/([\u{1F600}-\u{1F6FF}\u{2600}-\u{26FF}])/gu, "") // Emojileri çıkar
+        .replace(/\p{Emoji_Presentation}/gu, '') // Unicode emoji çıkar (gelişmiş destek için)
+        .replace(/:[^\s]+:/g, '') // :emoji: biçimini çıkar
+        .replace(/\s+/g, ' ').trim(); // gereksiz boşlukları temizle
+    
+      const translatedOutput = document.getElementById("translated-tour-" + id);
+      const whatsappLink = document.getElementById("whatsapp-tour-" + id);
+    
+      fetch(`https://translation.googleapis.com/language/translate/v2?key=${GOOGLE_API_KEY}`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ q: desc, target: lang })
+      })
+      .then(res => res.json())
+      .then(data => {
+        const translated = data.data.translations[0].translatedText.replace(/([\u{1F600}-\u{1F6FF}\u{2600}-\u{26FF}])/gu, "");
+        translatedOutput.innerText = translated;
+    
+        if (["ar", "fa", "he", "ur"].includes(lang)) {
+          translatedOutput.classList.add("rtl");
+        } else {
+          translatedOutput.classList.remove("rtl");
+        }
+    
+        const utterance = new SpeechSynthesisUtterance(translated);
+        utterance.lang = lang;
+        speechSynthesis.cancel();
+        speechSynthesis.speak(utterance);
+    
+        whatsappLink.href = `https://wa.me/?text=${encodeURIComponent(translated)}`;
+      })
+      .catch(err => {
+        translatedOutput.innerText = "Çeviri başarısız oldu.";
+        console.error("Translation Error:", err);
+      });
+    }
+    
+    function stopSpeaking() {
+      speechSynthesis.cancel();
+    }
+    </script>
 </body>
 
 </html>
