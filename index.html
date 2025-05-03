@@ -2270,77 +2270,48 @@
   background: #555;
 }
 
-    .custom-form {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  width: 95vw; /* %95 genişlik */
-  max-width: 600px;
-  margin: 0 auto;
-  padding: 30px;
-  background: #ffffff;
-  box-shadow: 0 8px 30px rgba(0,0,0,0.1);
-  border-radius: 15px;
+   .custom-form {
+  width: 100%;
+  max-width: 100%;
+  margin: 10px 0;
+  padding: 20px;
   box-sizing: border-box;
+  background: #fff;
+  border: 1px solid #ddd;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.06);
 }
 
 .custom-form input,
 .custom-form textarea {
   width: 100%;
   padding: 14px;
-  margin-bottom: 14px;
-  border-radius: 8px;
+  margin-bottom: 12px;
   border: 1px solid #ccc;
+  border-radius: 8px;
   font-size: 16px;
   background: #fafafa;
   box-sizing: border-box;
 }
 
-.custom-button {
+.custom-form button {
   width: 100%;
-  padding: 16px;
+  padding: 14px;
   background: linear-gradient(45deg, #00bcd4, #00796b);
   color: white;
   font-weight: bold;
-  font-size: 18px;
+  font-size: 16px;
   border: none;
   border-radius: 8px;
   cursor: pointer;
-  transition: 0.3s;
+  transition: all 0.3s ease;
 }
 
-.custom-button:hover {
+.custom-form button:hover {
   background: linear-gradient(45deg, #00796b, #004d40);
   transform: scale(1.02);
 }
 
-
-@media (max-width: 1024px) {
-  .custom-form {
-    width: 100%;
-    max-width: 100%;
-    margin: 0 auto;
-    padding: 20px;
-    box-sizing: border-box;
-  }
-}
-
-@media (max-width: 768px) {
-  .custom-form {
-    padding: 16px;
-    border-radius: 0;
-    box-shadow: none;
-  }
-}
-
-@media (min-width: 1025px) {
-  .custom-form {
-    max-width: 600px;
-    margin-left: auto;
-    margin-right: auto;
-  }
-}
 #editTourModal::-webkit-scrollbar {
   width: 8px;
 }
