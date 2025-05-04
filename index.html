@@ -4336,114 +4336,29 @@ ${(sale.occupants || []).map(o => (o.name || "?") + " (" + (o.docNo || "?") + ")
           <p>${t.description}</p>
           
    
-   <!-- 🔒 Gizli metin kaynağı (Açıklama) -->
-<div id="desc-${t.id}" style="display:none;">
-  📍 Konum: ${t.location}
-  💸 Fiyat: ${t.price} TL
-  🚌 Duraklar: ${t.stops?.join(" - ")}
-  📝 Açıklama: ${t.description}
-</div>
-    <!-- 🔊 Dinle Butonu -->
-<button class="speak-btn" onclick="toggleLanguages('${t.id}')">🔊 Dinle</button>
-
-<!-- 🌐 Dil Seçici + Çeviri + WhatsApp -->
-<div class="lang-block" id="lang-tour-${t.id}" style="display:none; margin-top:10px;">
-  <div class="lang-options" style="margin-bottom:6px;">
-    <select onchange="speakTranslatedInfo('${t.id}', this.value)">
-      <option value="">🌐 Dil Seçin</option>
-      <option value="tr">🇹🇷 Türkçe</option>
-      <option value="en">🇬🇧 İngilizce</option>
-      <option value="ar">🇸🇦 Arapça</option>
-      <option value="de">🇩🇪 Almanca</option>
-      <option value="ru">🇷🇺 Rusça</option>
-      <option value="fr">🇫🇷 Fransızca</option>
-      <option value="it">🇮🇹 İtalyanca</option>
-      <option value="fa">🇮🇷 Farsça</option>
-      <option value="zh">🇨🇳 Çince</option>
-    </select>
-    <button class="stop-btn" onclick="stopSpeaking()">🔇 Durdur</button>
-  </div>
-       <!-- 🔄 ÇEVİRİ METNİ -->
-  <div class="translated-output" id="translated-tour-${t.id}" style="display:none;"></div>
-
-  <!-- 📤 WHATSAPP -->
-  <a href="#" id="whatsapp-tour-${t.id}" class="share-whatsapp" target="_blank" style="display:none;">
-    📤 WhatsApp ile Paylaş
-  </a>
-</div>
+   <div class="card">
+  <p id="desc-${t.id}" style="display: none;">Konum: ${t.location} - Fiyat: ${t.price} TL - Duraklar: ${t.stops?.join(" - ")} - Açıklama: ${t.description}</p>
   
-  <style>
-  .speak-btn {
-  background: #03a9f4;
-  color: white;
-  padding: 8px 14px;
-  border: none;
-  border-radius: 8px;
-  font-weight: bold;
-  cursor: pointer;
-  margin-top: 10px;
-  transition: background 0.3s ease;
-}
-.speak-btn:hover {
-  background: #0288d1;
-}
+    <select id="lang-${t.id}">
+      <option value="">🌐 Dil Seçin</option>
+      <option value="en">İngilizce</option>
+      <option value="de">Almanca</option>
+      <option value="fr">Fransızca</option>
+      <option value="ar">Arapça</option>
+      <option value="fa">Farsça</option>
+      <option value="ru">Rusça</option>
+    </select>
+  
+    <button onclick="translateTour('${t.id}')">🌍 Çevir</button>
+    <button onclick="speakTranslated('${t.id}')" style="margin-left:10px;">🔊 Seslendir</button>
+    <button onclick="stopSpeaking()" style="margin-left:10px;">⛔ Durdur</button>
 
-.lang-options {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  margin-bottom: 8px;
-}
-.lang-options select {
-  padding: 6px 12px;
-  border-radius: 6px;
-  border: 1px solid #ccc;
-  font-size: 14px;
-}
-.stop-btn {
-  background: crimson;
-  color: white;
-  padding: 6px 12px;
-  border: none;
-  border-radius: 6px;
-  font-weight: bold;
-  cursor: pointer;
-  transition: background 0.3s ease;
-}
-.stop-btn:hover {
-  background: #c62828;
-}
+    <div id="translated-${t.id}" style="margin-top:10px; font-style:italic;"></div>
+  </div>
+  <a id="wa-${t.id}" href="#" target="_blank" style="display:none;">📤 WhatsApp Gönder</a>
 
-.translated-output {
-  background: #f5f5f5;
-  padding: 10px 14px;
-  border: 1px solid #ddd;
-  border-radius: 8px;
-  font-size: 15px;
-  font-style: italic;
-  line-height: 1.5;
-  margin-bottom: 10px;
-}
-.translated-output.rtl {
-  direction: rtl;
-  text-align: right;
-}
-
-.share-whatsapp {
-  display: inline-block;
-  background: #25d366;
-  color: white;
-  padding: 8px 14px;
-  border-radius: 6px;
-  font-weight: bold;
-  text-decoration: none;
-  transition: background 0.3s ease;
-}
-.share-whatsapp:hover {
-  background: #1ebd5a;
-}
-
-  </style>
+  
+  
   
   
   
@@ -8534,92 +8449,85 @@ const userBody = document.getElementById('adminUserBody');
 
 
 
-    </script>
+   
+function translateTour(id) {
+  const lang = document.getElementById(`lang-${id}`).value;
+  if (!lang) return alert("Lütfen bir dil seçin!");
 
-<script>
-    const GOOGLE_API_KEY = "AIzaSyDIxsLVVNiDfWI0btm3Mxu-erml-EHpX1s"; // kendi API anahtarın
-
-function toggleLanguages(tid) {
-  const block = document.getElementById("lang-tour-" + tid);
-  block.style.display = block.style.display === "none" ? "block" : "none";
-}
-
-// Sesli okuma ve çeviri
-function speakTranslatedInfo(tid, lang) {
-  if (!lang) return;
-
-  const raw = document.getElementById(`desc-${tid}`)?.innerText;
-  if (!raw) return alert("Açıklama bulunamadı!");
-
-  const cleanedText = raw
-    .replace(/[\u{1F600}-\u{1F6FF}\u{2600}-\u{26FF}]/gu, "")
-    .replace(/\p{Emoji_Presentation}/gu, '')
-    .replace(/:[^\s]+:/g, '')
-    .replace(/\s+/g, ' ')
+  const rawText = document.getElementById(`desc-${id}`).innerText;
+  const cleaned = rawText
+    .replace(/([\u{1F600}-\u{1F6FF}\u{2600}-\u{26FF}])/gu, "")
+    .replace(/\p{Emoji_Presentation}/gu, "")
+    .replace(/:[^\s]+:/g, "")
     .trim();
 
-  const output = document.getElementById(`translated-tour-${tid}`);
-  const waBtn = document.getElementById(`whatsapp-tour-${tid}`);
-
-  fetch(`https://translation.googleapis.com/language/translate/v2?key=AIzaSyDIxsLVVNiDfWI0btm3Mxu-erml-EHpX1s`, {
+  fetch(`https://translation.googleapis.com/language/translate/v2?key=${GOOGLE_API_KEY}`, {
     method: "POST",
     headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({ q: cleanedText, target: lang })
+    body: JSON.stringify({ q: cleaned, target: lang })
   })
   .then(res => res.json())
   .then(data => {
-    const translated = data?.data?.translations?.[0]?.translatedText || "";
-    if (!translated) {
-      output.innerText = "❌ Çeviri başarısız!";
-      return;
-    }
-
-    // Görünür yap
-    output.innerText = translated;
-    output.style.display = "block";
-    waBtn.href = `https://wa.me/?text=${encodeURIComponent(translated)}`;
-    waBtn.style.display = "inline-block";
-
-    // RTL kontrolü
-    if (["ar", "fa", "he", "ur"].includes(lang)) {
-      output.classList.add("rtl");
-    } else {
-      output.classList.remove("rtl");
-    }
-
-    // 🔊 Sesli okuma
-    safeSpeak(translated, lang);
-  })
+    const translated = data?.data?.translations?.[0]?.translatedText || "❌ Çeviri başarısız.";
+    document.getElementById(`translated-${id}`).innerText = translated;
+    updateWhatsAppLink(id);
+})
   .catch(err => {
-    output.innerText = "❌ Çeviri alınamadı!";
     console.error("Çeviri hatası:", err);
+    document.getElementById(`translated-${id}`).innerText = "❌ Çeviri başarısız.";
   });
 }
-function safeSpeak(text, lang = 'en') {
-  speechSynthesis.cancel();
-  const utter = new SpeechSynthesisUtterance(text);
-  utter.lang = lang;
 
-  const voices = speechSynthesis.getVoices();
-  if (!voices.length) {
-    speechSynthesis.onvoiceschanged = () => {
-      const v = speechSynthesis.getVoices().find(v => v.lang.startsWith(lang));
-      if (v) utter.voice = v;
-      speechSynthesis.speak(utter);
-    };
-  } else {
-    const v = voices.find(v => v.lang.startsWith(lang));
-    if (v) utter.voice = v;
-    setTimeout(() => speechSynthesis.speak(utter), 100); // iOS fix
-  }
+function speakTranslated(id) {
+  const text = document.getElementById(`translated-${id}`).innerText;
+  const lang = document.getElementById(`lang-${id}`).value || "en";
+  safeSpeak(text, lang);
+  
 }
+
 function stopSpeaking() {
-  if ('speechSynthesis' in window) {
-    speechSynthesis.cancel();
-  }
+  speechSynthesis.cancel();
 }
 
-</script>
+function safeSpeak(text, lang = "en") {
+  if (!text) return alert("Okunacak metin yok!");
+
+  speechSynthesis.cancel();
+  const utterance = new SpeechSynthesisUtterance(text);
+  utterance.lang = lang;
+
+  const trySpeak = () => {
+    const voices = speechSynthesis.getVoices();
+    const matched = voices.find(v => v.lang.startsWith(lang));
+    utterance.voice = matched || voices[0];
+    speechSynthesis.speak(utterance);
+  };
+
+  if (speechSynthesis.getVoices().length) {
+    setTimeout(trySpeak, 100);
+  } else {
+    speechSynthesis.onvoiceschanged = () => trySpeak();
+    setTimeout(() => trySpeak(), 300);
+  }
+
+  // iOS özel bilgilendirme
+  if (/iPhone|iPad|iPod/i.test(navigator.userAgent) && !sessionStorage.getItem("iosVoiceNotice")) {
+    alert("🔈 iPhone cihazlarda ses 2-3 saniye geç başlayabilir.");
+    sessionStorage.setItem("iosVoiceNotice", "shown");
+  }
+}
+function updateWhatsAppLink(id) {
+  const text = document.getElementById(`translated-${id}`)?.innerText || "";
+  const waBtn = document.getElementById(`wa-${id}`);
+  if (!text || !waBtn) return;
+
+  waBtn.href = "https://wa.me/?text=" + encodeURIComponent(text);
+  waBtn.style.display = "inline-block";
+}
+
+    </script>
+    <script> const GOOGLE_API_KEY = "AIzaSyDIxsLVVNiDfWI0btm3Mxu-erml-EHpX1s";
+    </script>
 
 </body>
 
