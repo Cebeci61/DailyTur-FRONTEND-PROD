@@ -8504,10 +8504,10 @@ function safeSpeak(text, lang = "en") {
   };
 
   if (speechSynthesis.getVoices().length) {
-    setTimeout(trySpeak, 100);
+    setTimeout(trySpeak, 500);
   } else {
     speechSynthesis.onvoiceschanged = () => trySpeak();
-    setTimeout(() => trySpeak(), 300);
+    setTimeout(() => trySpeak(), 1000);
   }
 
   // iOS özel bilgilendirme
